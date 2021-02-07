@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
+require('dotenv').config()
 
 const app = express();
 
@@ -35,11 +36,11 @@ app.post("/", function (req, res) {
 
     const jsonData = JSON.stringify(data);
 
-    const url = "https://us7.api.mailchimp.com/3.0/lists/8c36495c1a";
+    const url = process.env.LISTID;
 
     const options = {
         method: "POST",
-        auth: "victor1:fddc50232458af2b379546e79363e7bb-us7"
+        auth: process.env.APIKEY
     }
 
     const request = https.request(url, options, function (response) {
@@ -70,10 +71,3 @@ app.post("/failure", function (req, res) {
 app.listen(process.env.PORT || 3000, function () {
     console.log("Server is running on port 3000");
 });
-
-
-// Mailchimp API Key
-// fddc50232458af2b379546e79363e7bb-us7
-
-// Audience or List ID: it help mailchimp to identify the list you want to put your subscribers into
-// 8c36495c1a
